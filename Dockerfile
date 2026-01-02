@@ -1,18 +1,19 @@
-FROM node:18-slim
+FROM node:18-bullseye
 
 WORKDIR /app
 
-# Install build dependencies
+# Install build dependencies including cmake for native modules
 RUN apt-get update && apt-get install -y \
     python3 \
     make \
     g++ \
+    cmake \
     && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install --production
+# Install dependencies and force rebuild
+RUN npm install --production && npm rebuild
 
 COPY server.js ./
 
