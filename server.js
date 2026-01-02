@@ -33,7 +33,6 @@ console.log(
 let mySeq = 0;
 
 const seenPeers = new Map();
-const MAX_PEERS = 10000;
 
 const sseClients = new Set();
 
@@ -127,9 +126,6 @@ function handleMessage(msg, sourceSocket) {
       if (stored && stored.key) {
         key = stored.key;
       } else {
-        // Enforce MAX_PEERS for new peers
-        if (!stored && seenPeers.size >= MAX_PEERS) return;
-
         key = crypto.createPublicKey({
           key: Buffer.from(id, "hex"),
           format: "der",
