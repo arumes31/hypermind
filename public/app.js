@@ -192,12 +192,12 @@ const updateMap = async (peers) => {
             const loc = await fetchLocation(peer.ip);
             if (loc) {
                 const marker = L.circleMarker([loc.lat, loc.lon], {
-                    radius: 5,
+                    radius: 10,
                     fillColor: "#4ade80",
-                    color: "#fff",
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.8
+                    color: "transparent",
+                    weight: 0,
+                    opacity: 0,
+                    fillOpacity: 0.15
                 }).addTo(map);
                 
                 marker.bindPopup(`<b>Node</b> ${peer.id.slice(-8)}<br>${loc.city}, ${loc.country}`);
@@ -220,11 +220,29 @@ terminalToggle.addEventListener('click', (e) => {
     toggleChat();
 });
 
+// Initialize chat state from localStorage
+const initChatState = () => {
+    const isCollapsed = localStorage.getItem('chatCollapsed') === 'true';
+    if (isCollapsed) {
+        terminal.classList.add('collapsed');
+        terminalToggle.innerText = '▲';
+        document.body.classList.remove('chat-active');
+        document.body.classList.add('chat-collapsed');
+    } else {
+        terminal.classList.remove('collapsed');
+        terminalToggle.innerText = '▼';
+        document.body.classList.add('chat-active');
+        document.body.classList.remove('chat-collapsed');
+    }
+};
+
 const toggleChat = () => {
     terminal.classList.toggle('collapsed');
     const isCollapsed = terminal.classList.contains('collapsed');
     terminalToggle.innerText = isCollapsed ? '▲' : '▼';
     
+    localStorage.setItem('chatCollapsed', isCollapsed);
+
     if (isCollapsed) {
         document.body.classList.remove('chat-active');
         document.body.classList.add('chat-collapsed');
@@ -328,10 +346,11 @@ evtSource.onmessage = (event) => {
 
     if (data.chatEnabled) {
         terminal.classList.remove('hidden');
-        if (terminal.classList.contains('collapsed')) {
-            document.body.classList.add('chat-collapsed');
-        } else {
-            document.body.classList.add('chat-active');
+        
+        // Only initialize state once when chat becomes enabled
+        if (!terminal.dataset.initialized) {
+            initChatState();
+            terminal.dataset.initialized = 'true';
         }
     } else {
         terminal.classList.add('hidden');
