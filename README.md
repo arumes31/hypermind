@@ -178,3 +178,13 @@ A: No. It has the short-term working memory of a honeybee (approx. 2.5 seconds).
 
 **Q: Why did you make this?**
 A: The homelab must grow. ¯\\_(ツ)_/¯
+
+## » Star History!!
+
+<a href="https://star-history.com/#lklynet/hypermind&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=lklynet/hypermind&type=timeline&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=lklynet/hypermind&type=timeline" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=lklynet/hypermind&type=timeline" />
+ </picture>
+</a>
