@@ -165,7 +165,7 @@ It counts. That's the main thing.
 
 * **Ephemeral:** No database. No history. If you refresh, it's gone.
 * **Restricted (Default):** You can only talk to your ~32 direct connections.
-* **Global Mode:** Use `/global on` to broadcast messages to the entire swarm (relayed via gossip).
+* **Global Mode:** Use `/global your message` to broadcast messages to the entire swarm (relayed via gossip).
 * **Chaotic:** Every 30 seconds, the network rotates your connections. You might be mid-sentence and—*poof*—your audience changes.
 * **Anonymous:** You are identified only by the last 4 characters of your node ID.
 
