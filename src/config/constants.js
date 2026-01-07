@@ -1,42 +1,54 @@
 const crypto = require("crypto");
 
-const TOPIC_NAME = "hypermind-lklynet-v1";
+const TOPIC_NAME = process.env.TOPIC_NAME || "hypermind-lklynet-v1";
 const TOPIC = crypto.createHash("sha256").update(TOPIC_NAME).digest();
 
 /**
  * fccview here, frankly I don't think I can make this more secure, we can change it to `00000` but
  * that means until everyone upgrade there'll be a divide between nodes.
- * 
+ *
  * I ran it that way and I was fairly isolated, with hundreds of failed POW, shame.
  * adding an extra 0 makes it very expensive on attacker to make it worth the fun for them, so maybe consider it.
- * 
+ * ----
+ * ricardoboss: added a way to get the best of both worlds: newer nodes will use a harder POW, making them compatible
+ * with others who use a harder POW while still being able to accept "old" POWs from clients
  */
-const POW_PREFIX = "0000";
+const MY_POW_PREFIX = "00000";
+const VERIFICATION_POW_PREFIX = "0000";
 
-const MAX_PEERS = parseInt(process.env.MAX_PEERS) || 1000000;
-const MAX_MESSAGE_SIZE = 2048;
-const MAX_RELAY_HOPS = 2;
-const MAX_CONNECTIONS = 32;
+const MAX_PEERS = parseInt(process.env.MAX_PEERS) || 50000;
+const MAX_MESSAGE_SIZE = parseInt(process.env.MAX_MESSAGE_SIZE) || 2048;
+const MAX_RELAY_HOPS = parseInt(process.env.MAX_RELAY_HOPS) || 2;
+const MAX_CONNECTIONS = parseInt(process.env.MAX_CONNECTIONS) || 15;
 
-const HEARTBEAT_INTERVAL = 5000;
-const CONNECTION_ROTATION_INTERVAL = 30000;
-const PEER_TIMEOUT = 15000;
+const HEARTBEAT_INTERVAL = parseInt(process.env.HEARTBEAT_INTERVAL) || 30000;
+const CONNECTION_ROTATION_INTERVAL = parseInt(process.env.CONNECTION_ROTATION_INTERVAL) || 300000;
+const PEER_TIMEOUT = parseInt(process.env.PEER_TIMEOUT) || 45000;
 const BROADCAST_THROTTLE = 1000;
 const DIAGNOSTICS_INTERVAL = 10000;
 const PORT = process.env.PORT || 3000;
+const ENABLE_CHAT = process.env.ENABLE_CHAT === "true";
+const ENABLE_MAP = process.env.ENABLE_MAP === 'true';
+const CHAT_RATE_LIMIT = parseInt(process.env.CHAT_RATE_LIMIT) || 5000;
+const VISUAL_LIMIT = parseInt(process.env.VISUAL_LIMIT) || 500;
 
 module.exports = {
-    TOPIC_NAME,
-    TOPIC,
-    POW_PREFIX,
-    MAX_PEERS,
-    MAX_MESSAGE_SIZE,
-    MAX_RELAY_HOPS,
-    MAX_CONNECTIONS,
-    HEARTBEAT_INTERVAL,
-    CONNECTION_ROTATION_INTERVAL,
-    PEER_TIMEOUT,
-    BROADCAST_THROTTLE,
-    DIAGNOSTICS_INTERVAL,
-    PORT,
+  TOPIC_NAME,
+  TOPIC,
+  MY_POW_PREFIX,
+  VERIFICATION_POW_PREFIX,
+  MAX_PEERS,
+  MAX_MESSAGE_SIZE,
+  MAX_RELAY_HOPS,
+  MAX_CONNECTIONS,
+  HEARTBEAT_INTERVAL,
+  CONNECTION_ROTATION_INTERVAL,
+  PEER_TIMEOUT,
+  BROADCAST_THROTTLE,
+  DIAGNOSTICS_INTERVAL,
+  PORT,
+  ENABLE_CHAT,
+  ENABLE_MAP,
+  CHAT_RATE_LIMIT,
+  VISUAL_LIMIT,
 };

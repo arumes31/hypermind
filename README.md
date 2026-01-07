@@ -81,6 +81,33 @@ kubectl expose deployment hypermind --type=LoadBalancer --port=3000 --target-por
 
 ```
 
+## » Configuration
+
+You can customize Hypermind's behavior using environment variables.
+
+### Extras
+These features are disabled by default. Set them to `true` to enable.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `ENABLE_CHAT` | `false` | Enables the decentralized chat system. |
+| `ENABLE_MAP` | `false` | Enables map visualization features. |
+
+### Refinement
+Tune the network parameters to fit your system resources. The defaults are safe for most users. Don't change unless you know what you're doing.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `MAX_PEERS` | `50000` | Maximum number of peers to track in memory. |
+| `MAX_MESSAGE_SIZE` | `2048` | Maximum size of a single message in bytes. |
+| `MAX_RELAY_HOPS` | `2` | Maximum number of times a message is relayed. |
+| `MAX_CONNECTIONS` | `15` | Maximum number of active P2P connections. |
+| `HEARTBEAT_INTERVAL` | `30000` | How often (ms) to send heartbeat messages. |
+| `CONNECTION_ROTATION_INTERVAL` | `300000` | How often (ms) to rotate connections. |
+| `PEER_TIMEOUT` | `45000` | Time (ms) before a silent peer is considered offline. |
+| `CHAT_RATE_LIMIT` | `5000` | Time window (ms) for chat rate limiting. |
+| `VISUAL_LIMIT` | `500` | Max number of particles to render on the dashboard. |
+
 ## » Ecosystem & Integrations
 
 The community has bravely stepped up to integrate Hypermind into critical monitoring infrastructure.
@@ -125,7 +152,29 @@ See detailed [instructions](https://gethomepage.dev/configs/services/#icons).
 | Variable | Default | Description |
 | --- | --- | --- |
 | `PORT` | `3000` | The port the web dashboard listens on. Since `--network host` is used, this port opens directly on the host. |
-| `MAX_PEERS` | `1000000` | Maximum number of peers to track in the swarm. Unless you're expecting the entire internet to join, the default is probably fine. |
+| `MAX_PEERS` | `50000` | Maximum number of peers to track in the swarm. Unless you're expecting the entire internet to join, the default is probably fine. |
+| `ENABLE_CHAT` | `false` | Set to `true` to enable the ephemeral P2P chat terminal. |
+
+## » Features
+
+### 1. The Counter
+It counts. That's the main thing.
+
+### 2. Ephemeral Chat
+**New:** A completely decentralized, ephemeral chat system built directly on top of the swarm topology.
+
+* **Ephemeral:** No database. No history. If you refresh, it's gone.
+* **Restricted (Default):** You can only talk to your ~32 direct connections.
+* **Global Mode:** Use `/global your message` to broadcast messages to the entire swarm (relayed via gossip).
+* **Chaotic:** Every 30 seconds, the network rotates your connections. You might be mid-sentence and—*poof*—your audience changes.
+* **Anonymous:** You are identified only by the last 4 characters of your node ID.
+
+To enable this feature, set `ENABLE_CHAT=true`.
+
+**Commands:**
+* `/global on` - Enable global chat mode.
+* `/global off` - Disable global chat mode (local only).
+* `/global <message>` - Send a single message to the global swarm without switching modes.
 
 ## » Usage
 
