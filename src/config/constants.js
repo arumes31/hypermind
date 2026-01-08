@@ -18,7 +18,7 @@ const VERIFICATION_POW_PREFIX = "0000";
 
 const MAX_PEERS = parseInt(process.env.MAX_PEERS) || 50000;
 const MAX_MESSAGE_SIZE = parseInt(process.env.MAX_MESSAGE_SIZE) || 2048;
-const MAX_RELAY_HOPS = parseInt(process.env.MAX_RELAY_HOPS) || 2;
+const MAX_RELAY_HOPS = parseInt(process.env.MAX_RELAY_HOPS) || 5;
 const MAX_CONNECTIONS = parseInt(process.env.MAX_CONNECTIONS) || 15;
 
 const HEARTBEAT_INTERVAL = parseInt(process.env.HEARTBEAT_INTERVAL) || 30000;
