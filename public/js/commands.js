@@ -10,6 +10,30 @@ const ChatCommands = {
         if (output) output.innerHTML = "";
       },
     },
+    "/timestamp": {
+      description: "Toggles timestamps on and off",
+      execute: () => {
+        if (window.toggleTimestamp) {
+          window.toggleTimestamp();
+        }
+      },
+    },
+    "/sound": {
+      description: "Toggles sound effects",
+      execute: () => {
+        if (window.SoundManager) {
+          const enabled = window.SoundManager.toggle();
+          const status = enabled ? "enabled" : "disabled";
+          const output = document.getElementById("terminal-output");
+          if (output) {
+            const div = document.createElement("div");
+            div.innerHTML = `<span style="color: #aaa">[SYSTEM] Sound effects ${status}</span>`;
+            output.appendChild(div);
+            output.scrollTop = output.scrollHeight;
+          }
+        }
+      },
+    },
     "/help": {
       description: "Shows available commands",
       execute: () => {
@@ -57,6 +81,8 @@ const ChatCommands = {
             desc: "Send message to direct peers only (Global by default)",
           },
           { cmd: "/clear", desc: "Clear chat history" },
+          { cmd: "/timestamp", desc: "Toggle timestamps" },
+          { cmd: "/sound", desc: "Toggle sound effects" },
           { cmd: "/help", desc: "Show this help menu" },
         ];
         helpContainer.appendChild(
