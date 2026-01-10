@@ -4,15 +4,6 @@ const setupGitHubRoutes = (router, dependencies) => {
     const { repo } = dependencies;
 
     router.get("/api/github/latest-release", (req, res) => {
-        /** 
-         * @fccview here - just mocking the call for now
-         */
-        return res.json({
-            tag_name: "1.1.0",
-            html_url: `https://github.com/${repo.owner}/${repo.name}/releases/tag/v1.1.0`,
-            published_at: "2023-06-01T12:00:00Z",
-            body: "This is a test release",
-        });
 
         const options = {
             hostname: "api.github.com",
